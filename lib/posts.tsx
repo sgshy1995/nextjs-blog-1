@@ -1,6 +1,7 @@
 import path from 'path';
 import fs, {promises as fsp} from 'fs';
 import matter from 'gray-matter';
+import marked from 'marked';
 
 const markdownDir = path.join(process.cwd(), 'markdown');
 
@@ -27,11 +28,13 @@ export const getPost = async (id: string | string[] | undefined) => {
     const text = fs.readFileSync(fullPath, 'utf-8');
     const result = matter(text);
     const {data: {title, date}, content} = result;
+    const htmlContent = marked(content)
     return JSON.parse(JSON.stringify({
         id,
         title,
         date,
-        content
+        content,
+        htmlContent
     }));
 };
 

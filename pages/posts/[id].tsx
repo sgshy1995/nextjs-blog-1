@@ -6,11 +6,11 @@ type Props = {
 }
 
 const PostShow: NextPage<Props> = (props) => {
-    const {post} = props
+    const {post} = props;
     return (
         <div>
             <h1>{post.title}</h1>
-            <article>{post.content}</article>
+            <article dangerouslySetInnerHTML={{__html: post.htmlContent}}/>
         </div>
     );
 };
@@ -18,19 +18,19 @@ const PostShow: NextPage<Props> = (props) => {
 export default PostShow;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const ids = await getPostsIds()
+    const ids = await getPostsIds();
     return {
         paths: ids,
         fallback: true
-    }
+    };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const id:string | string[] | undefined = context.params!.id
-    const post = await getPost(id)
+    const id: string | string[] | undefined = context.params!.id;
+    const post = await getPost(id);
     return {
         props: {
             post
         }
-    }
-}
+    };
+};

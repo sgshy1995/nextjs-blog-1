@@ -3,6 +3,7 @@ type Post = {
     id: string;
     date :string;
     content: string;
+    htmlContent: string;
 }
 
 declare module "*.png" {
