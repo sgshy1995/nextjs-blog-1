@@ -49,7 +49,7 @@ var CreatePost1627814184052 = /*#__PURE__*/function () {
                     isNullable: false
                   }, {
                     name: 'date',
-                    type: 'date',
+                    type: 'varchar',
                     isNullable: false
                   }]
                 }), true);
@@ -77,7 +77,7 @@ var CreatePost1627814184052 = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return queryRunner.dropTable('post', true);
+                return queryRunner.dropTable('posts', true);
 
               case 2:
               case "end":

@@ -26,7 +26,7 @@ export class CreatePost1627814184052 implements MigrationInterface {
                 },
                 {
                     name: 'date',
-                    type: 'date',
+                    type: 'varchar',
                     isNullable: false
                 }
             ]
@@ -35,7 +35,7 @@ export class CreatePost1627814184052 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         // 降级数据库
-        await queryRunner.dropTable('post',true)
+        await queryRunner.dropTable('posts',true)
     }
 
 }
