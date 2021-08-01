@@ -36,3 +36,7 @@ yarn-error.log*
 # editor
 .idea/
 .vscode/
+
+# database
+blog-data/
+/blog-data/
