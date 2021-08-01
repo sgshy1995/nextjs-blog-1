@@ -1,0 +1,9 @@
+.posts-wrapper{
+  border: 1px solid royalblue;
+  > div{
+    padding: 10px;
+    > span {
+      padding: 2px;
+    }
+  }
+}

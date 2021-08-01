@@ -14,3 +14,21 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.main{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.avatar{
+  width: 100px;
+  height: 100px;
+}
+
+.info-tips{
+  color: royalblue;
+}
