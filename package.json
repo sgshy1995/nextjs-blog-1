@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & babel -w ./src --out-dir dist --extensions .ts,.tsx",
-    "dev:windows": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
+    "dev": "next dev",
+    "dev:both": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
+    "dev:linux": "next dev & babel -w ./src --out-dir dist --extensions .ts,.tsx",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
