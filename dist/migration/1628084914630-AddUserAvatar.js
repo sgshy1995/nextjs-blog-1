@@ -33,7 +33,8 @@ var AddUserAvatar1628084914630 = /*#__PURE__*/function () {
                 _context.next = 2;
                 return queryRunner.addColumns('users', [new _typeorm.TableColumn({
                   name: 'avatar',
-                  type: 'text'
+                  type: 'text',
+                  isNullable: true
                 })]);
 
               case 2:

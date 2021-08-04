@@ -11,7 +11,7 @@ export class User {
     username: string;
 
     @Column('text')
-    avatar: string;
+    avatar: string | null | undefined;
 
     @Column('varchar')
     passwordDigest: string;

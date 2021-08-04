@@ -21,9 +21,6 @@ export class Post {
     @Column('text')
     content: string;
 
-    @Column('int')
-    authorId: number;
-
     @CreateDateColumn()
     createdAt: Date;
 

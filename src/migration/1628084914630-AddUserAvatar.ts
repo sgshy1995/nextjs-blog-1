@@ -6,7 +6,8 @@ export class AddUserAvatar1628084914630 implements MigrationInterface {
         await queryRunner.addColumns('users',[
             new TableColumn({
                 name: 'avatar',
-                type: 'text'
+                type: 'text',
+                isNullable: true
             })
         ])
     }

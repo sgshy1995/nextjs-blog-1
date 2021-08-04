@@ -15,14 +15,8 @@ export class Discussion {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('varchar')
-    title: string;
-
     @Column('text')
     content: string;
-
-    @Column('int')
-    authorId: number;
 
     @CreateDateColumn()
     createdAt: Date;
