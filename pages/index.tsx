@@ -3,6 +3,7 @@ import {GetServerSideProps, NextPage} from 'next';
 import {UAParser} from 'ua-parser-js';
 import Image from 'next/image';
 import Link from 'next/link';
+import {getDBConnection} from 'lib/getDBConnection';
 
 type Props = {
     browser: {
@@ -52,6 +53,9 @@ const Home:NextPage<Props> = (props) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    // 获取 connection
+    const connect = await getDBConnection()
+
     const ua = context.req.headers['user-agent'];
     const info = new UAParser(ua).getResult();
     Object.keys(info).map(key=>{
