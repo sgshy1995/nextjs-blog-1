@@ -4,6 +4,7 @@ import {UAParser} from 'ua-parser-js';
 import Image from 'next/image';
 import Link from 'next/link';
 import {getDBConnection} from 'lib/getDBConnection';
+import {Post} from '../src/entity/Post';
 
 type Props = {
     browser: {
@@ -26,7 +27,8 @@ type Props = {
     engine: {
         name: string;
         version: string;
-    }
+    };
+    posts: Post[]
 }
 
 const Home:NextPage<Props> = (props) => {
@@ -46,6 +48,18 @@ const Home:NextPage<Props> = (props) => {
             <Link href="/posts">
                 <a>跳转到博客页</a>
             </Link>
+            <div>
+                <div>博客列表：</div>
+                {
+                    info.posts.map(post=>{
+                        return (
+                            <Link key={post.id} href={`/posts/${post.id}`}>
+                                <a>{post.title}</a>
+                            </Link>
+                        )
+                    })
+                }
+            </div>
         </div>
     );
 };
@@ -54,7 +68,11 @@ export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     // 获取 connection
-    const connect = await getDBConnection()
+    const connection = await getDBConnection()
+    const posts = await connection.manager.find(Post)
+    console.log('posts',posts)
+
+
 
     const ua = context.req.headers['user-agent'];
     const info = new UAParser(ua).getResult();
@@ -71,7 +89,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             cpu: info.cpu,
             device: info.device,
             os: info.os,
-            engine: info.engine
+            engine: info.engine,
+            posts: JSON.parse(JSON.stringify(posts))
         }
     };
 };
