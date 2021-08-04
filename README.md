@@ -4,13 +4,47 @@
 
 默认你已经配置好了docker，无论是在各种环境系统中。
 
+如果你需要清空之前的docker开发环境，请执行以下操作：
+
+```bash
+# 查看docker容器
+docker ps -a
+
+# 删除docker容器
+docker kill <id>
+docker rm <id>
+
+# 删除本地数据库储存目录
+rm -rf blog-data
+```
+
+如果你是旧版docker，可能需要执行以下命令来清空：
+
+```bash
+docker container prune
+docker volume rm blog-data
+```
+
+重新配置开发环境：
+
 ```bash
 # 创建 postgres 数据库 仓库
 mkdir blog-data
 docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
+docker exec -it <id> bash
+```
+
+修改 `ormconfig.json` 来配置postgres数据库参数。
+
+配置完成后，执行以下操作：
+
+```bash
+# postgres 创建数据库
+psql -U blog -w
+CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
 
 # postgres 创建表
-CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
+yarn m:run
 ```
 
 ## Getting Started 开始启动
@@ -22,6 +56,15 @@ npm run dev
 # or
 yarn dev
 ```
+
+## 填充数据
+
+```bash
+# postgres 填充数据，基于实体
+node dist/seed.js
+```
+
+## 浏览项目
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
