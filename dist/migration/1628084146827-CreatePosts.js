@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CreatePost1627814184052 = void 0;
+exports.CreatePosts1628084146827 = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -17,12 +17,12 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _typeorm = require("typeorm");
 
-var CreatePost1627814184052 = /*#__PURE__*/function () {
-  function CreatePost1627814184052() {
-    (0, _classCallCheck2["default"])(this, CreatePost1627814184052);
+var CreatePosts1628084146827 = /*#__PURE__*/function () {
+  function CreatePosts1628084146827() {
+    (0, _classCallCheck2["default"])(this, CreatePosts1628084146827);
   }
 
-  (0, _createClass2["default"])(CreatePost1627814184052, [{
+  (0, _createClass2["default"])(CreatePosts1628084146827, [{
     key: "up",
     value: function () {
       var _up = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(queryRunner) {
@@ -35,10 +35,11 @@ var CreatePost1627814184052 = /*#__PURE__*/function () {
                   name: 'posts',
                   columns: [{
                     name: 'id',
-                    type: 'int',
-                    generationStrategy: 'increment',
+                    isGenerated: true,
                     isPrimary: true,
-                    isGenerated: true
+                    generationStrategy: 'increment',
+                    type: 'int',
+                    isNullable: false
                   }, {
                     name: 'title',
                     type: 'varchar',
@@ -48,11 +49,21 @@ var CreatePost1627814184052 = /*#__PURE__*/function () {
                     type: 'text',
                     isNullable: false
                   }, {
-                    name: 'date',
-                    type: 'varchar',
+                    name: 'authorId',
+                    type: 'int',
                     isNullable: false
+                  }, {
+                    name: 'createdAt',
+                    type: 'timestamp',
+                    isNullable: false,
+                    "default": 'now()'
+                  }, {
+                    name: 'updatedAt',
+                    type: 'timestamp',
+                    isNullable: false,
+                    "default": 'now()'
                   }]
-                }), true);
+                }));
 
               case 2:
               case "end":
@@ -77,7 +88,7 @@ var CreatePost1627814184052 = /*#__PURE__*/function () {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return queryRunner.dropTable('posts', true);
+                return queryRunner.dropTable('posts');
 
               case 2:
               case "end":
@@ -94,7 +105,7 @@ var CreatePost1627814184052 = /*#__PURE__*/function () {
       return down;
     }()
   }]);
-  return CreatePost1627814184052;
+  return CreatePosts1628084146827;
 }();
 
-exports.CreatePost1627814184052 = CreatePost1627814184052;
+exports.CreatePosts1628084146827 = CreatePosts1628084146827;

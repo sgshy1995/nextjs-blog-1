@@ -1,6 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+这是一个 [Next.js](https://nextjs.org/) 项目，使用 [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) 快速构建和配置。
 
-## Getting Started
+## Database Operations 数据库操作
+
+默认你已经配置好了docker，无论是在各种环境系统中。
+
+```bash
+# 创建 postgres 数据库 仓库
+mkdir blog-data
+docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
+
+# postgres 创建表
+CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
+```
+
+## Getting Started 开始启动
 
 First, run the development server:
 
@@ -18,7 +31,7 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## Learn More 了解更多
 
 To learn more about Next.js, take a look at the following resources:
 
