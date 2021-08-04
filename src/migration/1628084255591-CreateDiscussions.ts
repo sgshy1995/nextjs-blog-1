@@ -20,11 +20,6 @@ export class CreateDiscussions1628084255591 implements MigrationInterface {
                     isNullable: false
                 },
                 {
-                    name: 'username',
-                    type: 'varchar',
-                    isNullable: false
-                },
-                {
                     name: 'content',
                     type: 'text',
                     isNullable: false

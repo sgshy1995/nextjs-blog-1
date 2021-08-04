@@ -45,10 +45,6 @@ var CreateDiscussions1628084255591 = /*#__PURE__*/function () {
                     type: 'int',
                     isNullable: false
                   }, {
-                    name: 'username',
-                    type: 'varchar',
-                    isNullable: false
-                  }, {
                     name: 'content',
                     type: 'text',
                     isNullable: false
