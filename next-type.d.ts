@@ -6,6 +6,12 @@ type Post = {
     htmlContent: string;
 }
 
+type Result = {
+    code: number;
+    message: string;
+    status: boolean;
+}
+
 declare module "*.png" {
     const value: any;
     const value: any;
@@ -28,6 +34,11 @@ declare module "*.gif" {
 }
 
 declare module "*.svg" {
+    const value: any;
+    export default value;
+}
+
+declare module "*.key" {
     const value: any;
     export default value;
 }
