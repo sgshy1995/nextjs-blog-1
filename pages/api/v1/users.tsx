@@ -40,8 +40,6 @@ const Posts: NextApiHandler = async (req, res) => {
     //const {username, password, passwordConfirm} = req.body as { [key: string]: string };
 
     const connection = await getDBConnection();
-    const user = new User();
-    user.username = username;
     let result: Result = {
         code: 422,
         message: '',
@@ -56,8 +54,8 @@ const Posts: NextApiHandler = async (req, res) => {
         result.message = '用户名长度不可超出14位';
     } else if (!password) {
         result.message = '请输入密码';
-    } else if (password.length <= 12) {
-        result.message = '请输入12位以上密码';
+    } else if (password.length <= 8 || password.length >= 18) {
+        result.message = '请输入8至18位密码';
     } else if (!passwordConfirm) {
         result.message = '请输入确认密码';
     } else if (password !== passwordConfirm) {
@@ -67,9 +65,13 @@ const Posts: NextApiHandler = async (req, res) => {
     }
     if (!hasError) {
         result.code = 200;
-        result.message = ''.toString();
+        result.message = '注册成功';
         result.status = true;
         res.status(200).setHeader('Content-Type', 'application/json').json(result);
+        const user = new User();
+        user.username = username;
+        user.passwordDigest = fields.password
+        await connection.manager.save(user)
     } else {
         res.status(422).setHeader('Content-Type', 'application/json').json(result);
     }
