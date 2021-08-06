@@ -33,10 +33,8 @@ const Users: NextApiHandler = async (req, res) => {
     });
     const {fields, files} = data;
 
-    //解密
+    // 获取公钥，公钥的环境变量要暴露给浏览器
     const publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
-    const username: string = fields.username;
-
     // 解密
     const decipherP = crypto.createDecipher("aes-256-gcm", publicKey);
     decipherP.setAuthTag(stringToUint8Array(fields.passwordTag));
@@ -49,7 +47,7 @@ const Users: NextApiHandler = async (req, res) => {
     const passwordConfirm = decipherPCIn + decipherPC.final("utf8");
 
     //const {username, password, passwordConfirm} = req.body as { [key: string]: string };
-
+    const username: string = fields.username;
     const connection = await getDBConnection();
 
     const user = new User();

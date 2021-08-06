@@ -19,7 +19,7 @@ const SignIn: NextPage<{user:User | undefined}> = (props) => {
     const onSubmit = useCallback((e) => {
         e.preventDefault();
 
-        // 获取公钥和私钥
+        // 获取公钥，公钥的环境变量要暴露给浏览器
         let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
         // 加密
         const cipherP = crypto.createCipher("aes-256-gcm", publicKey);
@@ -33,7 +33,6 @@ const SignIn: NextPage<{user:User | undefined}> = (props) => {
         formData.append('passwordTag', Uint8ArrayToString(secretPTag));
 
         axios.post('/api/v1/sessions', formData).then((response) => {
-            console.log('response', response);
             setErrorInfo('');
             alert('登录成功');
         }).catch((error) => {
@@ -96,8 +95,6 @@ export default SignIn;
 export const getServerSideProps: GetServerSideProps = withSession(async (context) => {
     // @ts-ignore
     const user = context.req.session.get('currentUser');
-    console.log('user',user)
-    console.log('type user',typeof user)
     return {
         props: user ? {
             user: JSON.parse(JSON.stringify(user))

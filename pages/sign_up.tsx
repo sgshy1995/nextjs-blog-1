@@ -16,9 +16,8 @@ const SignUp: NextPage = () => {
     const onSubmit = useCallback((e)=>{
         e.preventDefault()
 
-        // 获取公钥和私钥
+        // 获取公钥，公钥的环境变量要暴露给浏览器
         let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
-        console.log('publicKey',publicKey)
         // 加密
         const cipherP = crypto.createCipher("aes-256-gcm", publicKey);
         const cipherPIn = cipherP.update(form.password,'utf8','hex');

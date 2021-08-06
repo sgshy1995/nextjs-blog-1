@@ -79,7 +79,7 @@ export class User {
 
     @BeforeInsert()
     generatePasswordDigest(){
-        // 后端加盐存储密码加密
+        // 后端加盐存储密码加密。获取私钥。
         const privateKey = process.env.BACK_KEY;
         const hmac = crypto.createHmac("sha256", privateKey);
         this.passwordDigest = hmac.update(this.password).digest("hex");
