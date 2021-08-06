@@ -30,6 +30,8 @@ export class SignIn {
                 this.passwordDigest = hmac.update(this.password).digest("hex");
                 if (this.passwordDigest === user.passwordDigest) {
                     this.hasError = false;
+                    // 记录 user 信息，以便后面记录 session
+                    this.user = user
                 } else {
                     this.result.message = '用户名或密码错误';
                 }
