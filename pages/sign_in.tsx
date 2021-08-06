@@ -6,11 +6,10 @@ import {Uint8ArrayToString} from 'lib/bufferSwitchString';
 
 import crypto from 'crypto';
 
-const SignUp: NextPage = () => {
+const SignIn: NextPage = () => {
     const [form, setForm] = useState({
         username: '',
-        password: '',
-        passwordConfirm: ''
+        password: ''
     });
     const [errorInfo,setErrorInfo] = useState('')
     const onSubmit = useCallback((e)=>{
@@ -24,29 +23,21 @@ const SignUp: NextPage = () => {
         const secretP = cipherPIn + cipherP.final("hex");
         const secretPTag = cipherP.getAuthTag();
 
-        const cipherPC = crypto.createCipher("aes-256-gcm", publicKey);
-        const cipherPCIn = cipherPC.update(form.passwordConfirm,'utf8','hex');
-        const secretPC = cipherPCIn + cipherPC.final("hex");
-        const secretPCTag = cipherPC.getAuthTag();
-
         const formData = new FormData()
         formData.append('username', form.username)
         formData.append('password', secretP)
-        formData.append('passwordConfirm', secretPC)
         formData.append('passwordTag',  Uint8ArrayToString(secretPTag))
-        formData.append('passwordConfirmTag', Uint8ArrayToString(secretPCTag))
 
-        axios.post('/api/v1/users',formData).then((response)=>{
+        axios.post('/api/v1/sessions',formData).then((response)=>{
             console.log('response',response)
             setErrorInfo('')
-            alert('注册成功')
-            window.location.href = '/sign_in'
+            alert('登录成功')
         }).catch((error)=>{
             console.log('err',error.response.data)
             if (error.response){
                 setErrorInfo((error as AxiosError).response.data.message)
             }else{
-                setErrorInfo('注册失败，请联系管理员')
+                setErrorInfo('登录失败，请联系管理员')
             }
         })
         console.log('submit',form)
@@ -54,7 +45,7 @@ const SignUp: NextPage = () => {
     return (
         <React.Fragment>
             <div className="signup-wrapper">
-                <div className="title">注册页</div>
+                <div className="title">登录页</div>
                 <div className="content">
                     <form onSubmit={onSubmit}>
                         <div className="form-item">
@@ -75,20 +66,11 @@ const SignUp: NextPage = () => {
                                 })}}/>
                             </label>
                         </div>
-                        <div className="form-item">
-                            <label>
-                                确认密码：
-                                <input value={form.passwordConfirm} type="password" onChange={(e)=>{setForm({
-                                    ...form,
-                                    passwordConfirm: e.target.value
-                                })}}/>
-                            </label>
-                        </div>
                         {
                             errorInfo ? <div className="error-info">{errorInfo}</div> : null
                         }
                         <div className="form-item">
-                            <button type="submit">注册</button>
+                            <button type="submit">登录</button>
                         </div>
                     </form>
                 </div>
@@ -97,4 +79,4 @@ const SignUp: NextPage = () => {
     );
 };
 
-export default SignUp;
+export default SignIn;
