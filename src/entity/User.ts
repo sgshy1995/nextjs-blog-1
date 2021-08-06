@@ -1,7 +1,16 @@
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {Post} from "./Post";
 import {Discussion} from './Discussion';
 import {getDBConnection} from '../../lib/getDBConnection';
+import crypto from 'crypto';
 
 @Entity('users')
 export class User {
@@ -68,5 +77,11 @@ export class User {
         }
     }
 
-
+    @BeforeInsert()
+    generatePasswordDigest(){
+        // 后端加盐存储密码加密
+        const privateKey = require('security/rsa_private.json').key;
+        const hmac = crypto.createHmac("sha256", privateKey);
+        this.passwordDigest = hmac.update(this.password).digest("hex");
+    }
 }

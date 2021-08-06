@@ -38,7 +38,6 @@ const Users: NextApiHandler = async (req, res) => {
     const username: string = fields.username;
 
     // 解密
-    console.log('fields',fields.password,fields.passwordConfirm)
     const decipherP = crypto.createDecipher("aes-256-gcm", publicKey);
     decipherP.setAuthTag(stringToUint8Array(fields.passwordTag));
     const decipherPIn = decipherP.update(fields.password, "hex","utf8");
@@ -65,10 +64,6 @@ const Users: NextApiHandler = async (req, res) => {
         user.result.message = '注册成功';
         user.result.status = true;
         res.status(200);
-        // 后端加盐存储密码加密
-        const privateKey = require('security/rsa_private.json').key;
-        const hmac = crypto.createHmac("sha256", privateKey);
-        user.passwordDigest = hmac.update(password).digest("hex");
         await connection.manager.save(user)
     } else {
         res.status(422);
