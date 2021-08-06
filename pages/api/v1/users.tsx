@@ -54,14 +54,19 @@ const Posts: NextApiHandler = async (req, res) => {
         result.message = '用户名长度不可超出14位';
     } else if (!password) {
         result.message = '请输入密码';
-    } else if (password.length <= 8 || password.length >= 18) {
+    } else if (password.length < 8 || password.length > 18) {
         result.message = '请输入8至18位密码';
     } else if (!passwordConfirm) {
         result.message = '请输入确认密码';
     } else if (password !== passwordConfirm) {
         result.message = '两次密码不一致';
     } else {
-        hasError = false;
+        const found = await connection.manager.findOne(User,{username})
+        if (found){
+            result.message = '用户名已存在';
+        }else{
+            hasError = false;
+        }
     }
     if (!hasError) {
         result.code = 200;

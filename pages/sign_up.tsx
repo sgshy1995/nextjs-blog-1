@@ -20,8 +20,8 @@ const SignUp: NextPage = () => {
         // 获取公钥和私钥
         let publicKey = require('security/rsa_public.json').key;
         // 加密
-        let secretP = crypto.publicEncrypt(publicKey, Buffer.from(form.password,'utf-8'));
-        let secretPC = crypto.publicEncrypt(publicKey, Buffer.from(form.passwordConfirm,'utf-8'));
+        let secretP = crypto.publicEncrypt(publicKey, Buffer.from(form.password,'utf8'));
+        let secretPC = crypto.publicEncrypt(publicKey, Buffer.from(form.passwordConfirm,'utf8'));
         // 加密转字符串
         const stringBufferPassword = Uint8ArrayToString(secretP)
         const stringBufferPasswordConfirm = Uint8ArrayToString(secretPC)
@@ -33,6 +33,8 @@ const SignUp: NextPage = () => {
 
         axios.post('/api/v1/users',formData).then((response)=>{
             console.log('response',response)
+            setErrorInfo('')
+            alert('注册成功')
         }).catch((error)=>{
             console.log('err',error.response.data)
             if (error.response){
