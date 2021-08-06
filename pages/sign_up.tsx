@@ -17,7 +17,8 @@ const SignUp: NextPage = () => {
         e.preventDefault()
 
         // 获取公钥和私钥
-        let publicKey = require('security/rsa_public.json').key;
+        let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
+        console.log('publicKey',publicKey)
         // 加密
         const cipherP = crypto.createCipher("aes-256-gcm", publicKey);
         const cipherPIn = cipherP.update(form.password,'utf8','hex');

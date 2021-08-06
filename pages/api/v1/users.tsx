@@ -34,7 +34,7 @@ const Users: NextApiHandler = async (req, res) => {
     const {fields, files} = data;
 
     //解密
-    const publicKey = require('security/rsa_public.json').key;
+    const publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
     const username: string = fields.username;
 
     // 解密

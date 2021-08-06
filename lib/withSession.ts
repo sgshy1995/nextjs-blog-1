@@ -3,7 +3,7 @@ import {NextApiHandler} from 'next';
 
 export function withSession(handler:NextApiHandler) {
     return withIronSession(handler, {
-        password: require('security/rsa_cookie.json').key,
+        password: process.env.COOKIE,
         cookieName: 'blog',
         cookieOptions: {
             // the next line allows to use the session in non-https environments like

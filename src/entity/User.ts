@@ -80,7 +80,7 @@ export class User {
     @BeforeInsert()
     generatePasswordDigest(){
         // 后端加盐存储密码加密
-        const privateKey = require('security/rsa_private.json').key;
+        const privateKey = process.env.BACK_KEY;
         const hmac = crypto.createHmac("sha256", privateKey);
         this.passwordDigest = hmac.update(this.password).digest("hex");
     }
