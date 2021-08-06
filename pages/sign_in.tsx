@@ -1,4 +1,4 @@
-import {GetServerSideProps, NextPage} from 'next';
+import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import React, {useCallback, useState} from 'react';
 import axios, {AxiosError} from 'axios';
 import {withSession} from '../lib/withSession';
@@ -10,7 +10,7 @@ import {Post} from '../src/entity/Post';
 import {UAParser} from 'ua-parser-js';
 import {User} from '../src/entity/User';
 
-const SignIn: NextPage<{user:User | undefined}> = (props) => {
+const SignIn: NextPage<{ user: User | undefined }> = (props) => {
     const [form, setForm] = useState({
         username: '',
         password: ''
@@ -91,8 +91,8 @@ const SignIn: NextPage<{user:User | undefined}> = (props) => {
 
 export default SignIn;
 
-// @ts-ignore
-export const getServerSideProps: GetServerSideProps = withSession(async (context) => {
+
+export const getServerSideProps: GetServerSideProps = withSession(async (context: GetServerSidePropsContext) => {
     // @ts-ignore
     const user = context.req.session.get('currentUser');
     return {

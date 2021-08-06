@@ -182,7 +182,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
   }, {
     key: "generatePasswordDigest",
     value: function generatePasswordDigest() {
-      // 后端加盐存储密码加密
+      // 后端加盐存储密码加密。获取私钥。
       var privateKey = process.env.BACK_KEY;
 
       var hmac = _crypto["default"].createHmac("sha256", privateKey);
