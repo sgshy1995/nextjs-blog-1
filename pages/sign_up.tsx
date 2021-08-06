@@ -4,8 +4,7 @@ import axios, {AxiosError} from 'axios';
 import {Uint8ArrayToString} from 'lib/bufferSwitchString';
 // 非对称性加密
 
-const crypto = require("crypto");
-const path = require("path");
+import crypto from 'crypto';
 
 const SignUp: NextPage = () => {
     const [form, setForm] = useState({
@@ -20,16 +19,22 @@ const SignUp: NextPage = () => {
         // 获取公钥和私钥
         let publicKey = require('security/rsa_public.json').key;
         // 加密
-        let secretP = crypto.publicEncrypt(publicKey, Buffer.from(form.password,'utf8'));
-        let secretPC = crypto.publicEncrypt(publicKey, Buffer.from(form.passwordConfirm,'utf8'));
-        // 加密转字符串
-        const stringBufferPassword = Uint8ArrayToString(secretP)
-        const stringBufferPasswordConfirm = Uint8ArrayToString(secretPC)
+        const cipherP = crypto.createCipher("aes-256-gcm", publicKey);
+        const cipherPIn = cipherP.update(form.password,'utf8','hex');
+        const secretP = cipherPIn + cipherP.final("hex");
+        const secretPTag = cipherP.getAuthTag();
+
+        const cipherPC = crypto.createCipher("aes-256-gcm", publicKey);
+        const cipherPCIn = cipherPC.update(form.passwordConfirm,'utf8','hex');
+        const secretPC = cipherPCIn + cipherPC.final("hex");
+        const secretPCTag = cipherPC.getAuthTag();
 
         const formData = new FormData()
         formData.append('username', form.username)
-        formData.append('password', stringBufferPassword)
-        formData.append('passwordConfirm', stringBufferPasswordConfirm)
+        formData.append('password', secretP)
+        formData.append('passwordConfirm', secretPC)
+        formData.append('passwordTag',  Uint8ArrayToString(secretPTag))
+        formData.append('passwordConfirmTag', Uint8ArrayToString(secretPCTag))
 
         axios.post('/api/v1/users',formData).then((response)=>{
             console.log('response',response)
