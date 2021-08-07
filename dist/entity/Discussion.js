@@ -19,21 +19,9 @@ var _initializerWarningHelper2 = _interopRequireDefault(require("@babel/runtime/
 
 var _typeorm = require("typeorm");
 
-var _Post = require("./Post");
-
-var _User = require("./User");
-
 var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _temp;
 
-var Discussion = (_dec = (0, _typeorm.Entity)('discussions'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)('text'), _dec4 = (0, _typeorm.CreateDateColumn)(), _dec5 = (0, _typeorm.UpdateDateColumn)(), _dec6 = (0, _typeorm.ManyToOne)(function (type) {
-  return _Post.Post;
-}, function (post) {
-  return post.discussions;
-}), _dec7 = (0, _typeorm.ManyToOne)(function (type) {
-  return _User.User;
-}, function (user) {
-  return user.discussions;
-}), _dec(_class = (_class2 = (_temp = function Discussion() {
+var Discussion = (_dec = (0, _typeorm.Entity)('discussions'), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)('text'), _dec4 = (0, _typeorm.CreateDateColumn)(), _dec5 = (0, _typeorm.UpdateDateColumn)(), _dec6 = (0, _typeorm.ManyToOne)('Post', 'discussions'), _dec7 = (0, _typeorm.ManyToOne)('User', 'discussions'), _dec(_class = (_class2 = (_temp = function Discussion() {
   (0, _classCallCheck2["default"])(this, Discussion);
   (0, _initializerDefineProperty2["default"])(this, "id", _descriptor, this);
   (0, _initializerDefineProperty2["default"])(this, "content", _descriptor2, this);

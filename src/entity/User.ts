@@ -32,10 +32,10 @@ export class User {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToMany(type => Post, post => post.author)
+    @OneToMany('Post', 'author')
     posts: Post[];
 
-    @OneToMany(type => Discussion, discussion => discussion.id)
+    @OneToMany('Discussion', 'id')
     discussions: Discussion[];
 
     secretPTag: string;

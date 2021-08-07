@@ -27,9 +27,9 @@ export class Post {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToMany(type => Discussion,discussion => discussion.id)
+    @OneToMany('Discussion','id')
     discussions: Discussion[]
 
-    @ManyToOne(type => User,user => user.posts)
+    @ManyToOne('User','posts')
     author: User
 }
