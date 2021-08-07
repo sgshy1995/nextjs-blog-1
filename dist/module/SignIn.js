@@ -85,7 +85,7 @@ var SignIn = /*#__PURE__*/function () {
 
                 if (user) {
                   // 密码加盐对比数据库
-                  privateKey = require('security/rsa_private.json').key;
+                  privateKey = process.env.BACK_KEY;
                   hmac = _crypto["default"].createHmac("sha256", privateKey);
                   this.passwordDigest = hmac.update(this.password).digest("hex");
 

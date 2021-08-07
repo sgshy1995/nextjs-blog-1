@@ -2,13 +2,9 @@ import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import React, {useCallback, useState} from 'react';
 import axios, {AxiosError} from 'axios';
 import {withSession} from '../lib/withSession';
-// 非对称性加密
-import {Uint8ArrayToString} from 'lib/bufferSwitchString';
-import crypto from 'crypto';
-import {getDBConnection} from '../lib/getDBConnection';
-import {Post} from '../src/entity/Post';
-import {UAParser} from 'ua-parser-js';
 import {User} from '../src/entity/User';
+import {Form} from '../components/Form';
+import {frontCreateCipher} from '../lib/frontSecurity';
 
 const SignIn: NextPage<{ user: User | undefined }> = (props) => {
     const [form, setForm] = useState({
@@ -22,15 +18,12 @@ const SignIn: NextPage<{ user: User | undefined }> = (props) => {
         // 获取公钥，公钥的环境变量要暴露给浏览器
         let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
         // 加密
-        const cipherP = crypto.createCipher("aes-256-gcm", publicKey);
-        const cipherPIn = cipherP.update(form.password, 'utf8', 'hex');
-        const secretP = cipherPIn + cipherP.final("hex");
-        const secretPTag = cipherP.getAuthTag();
+        const {secret: secretP, secretTag: secretPTag} = frontCreateCipher(form.password, publicKey);
 
         const formData = new FormData();
         formData.append('username', form.username);
         formData.append('password', secretP);
-        formData.append('passwordTag', Uint8ArrayToString(secretPTag));
+        formData.append('passwordTag', secretPTag);
 
         axios.post('/api/v1/sessions', formData).then((response) => {
             setErrorInfo('');
@@ -53,36 +46,33 @@ const SignIn: NextPage<{ user: User | undefined }> = (props) => {
                     props.user && <div>当前登录用户：{props.user.username}</div>
                 }
                 <div className="content">
-                    <form onSubmit={onSubmit}>
-                        <div className="form-item">
-                            <label>
-                                用户名：
-                                <input value={form.username} type="text" onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        username: e.target.value
-                                    });
-                                }}/>
-                            </label>
-                        </div>
-                        <div className="form-item">
-                            <label>
-                                密码：
-                                <input value={form.password} type="password" onChange={(e) => {
-                                    setForm({
-                                        ...form,
-                                        password: e.target.value
-                                    });
-                                }}/>
-                            </label>
-                        </div>
-                        {
-                            errorInfo ? <div className="error-info">{errorInfo}</div> : null
-                        }
-                        <div className="form-item">
-                            <button type="submit">登录</button>
-                        </div>
-                    </form>
+                    <Form onSubmit={onSubmit}
+                          fields={
+                              [
+                                  {
+                                      label: '用户名', type: 'text', onChange: (e) => {
+                                          setForm({
+                                              ...form,
+                                              username: e.target.value
+                                          });
+                                      }, value: form.username
+                                  },
+                                  {
+                                      label: '密码', type: 'password', onChange: (e) => {
+                                          setForm({
+                                              ...form,
+                                              password: e.target.value
+                                          });
+                                      }, value: form.password
+                                  }
+                              ]}
+                          errorInfo={errorInfo}
+                          button={
+                              <div className="form-item">
+                                  <button type="submit">登录</button>
+                              </div>
+                          }
+                    />
                 </div>
             </div>
         </React.Fragment>

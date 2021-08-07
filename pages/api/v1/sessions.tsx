@@ -1,10 +1,8 @@
 import {NextApiHandler} from 'next';
-import {getDBConnection} from 'lib/getDBConnection';
 import {IncomingForm} from 'formidable';
-import crypto from 'crypto';
-import {stringToUint8Array} from 'lib/bufferSwitchString';
 import {SignIn} from 'src/module/SignIn';
 import {withSession} from 'lib/withSession';
+import {frontCreateDecipher} from '../../../lib/frontSecurity';
 
 type FormData = {
     fields: {
@@ -32,18 +30,13 @@ const Users: NextApiHandler = async (req, res) => {
     const {fields} = data;
 
     //解密
-    const publicKey = require('security/rsa_public.json').key;
+    const publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
     const username: string = fields.username;
 
     // 解密
-    const decipherP = crypto.createDecipher("aes-256-gcm", publicKey);
-    decipherP.setAuthTag(stringToUint8Array(fields.passwordTag));
-    const decipherPIn = decipherP.update(fields.password, "hex", "utf8");
-    const password = decipherPIn + decipherP.final("utf8");
+    const {passwordOut: password} = frontCreateDecipher(fields.password, publicKey, fields.passwordTag);
 
     //const {username, password, passwordConfirm} = req.body as { [key: string]: string };
-
-    const connection = await getDBConnection();
 
     const signIn = new SignIn();
     signIn.username = username;
@@ -57,9 +50,8 @@ const Users: NextApiHandler = async (req, res) => {
         signIn.result.status = true;
         res.status(200);
         req.session.set('currentUser', signIn.user);
-        console.log('signIn.user',signIn.user)
-        await req.session.save()
-        //await connection.manager.save(signIn)
+        console.log('signIn.user', signIn.user);
+        await req.session.save();
     } else {
         res.status(422);
     }

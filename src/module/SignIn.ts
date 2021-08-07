@@ -25,7 +25,7 @@ export class SignIn {
             const user = await connection.manager.findOne(User, {where: {username: this.username}});
             if (user) {
                 // 密码加盐对比数据库
-                const privateKey = require('security/rsa_private.json').key;
+                const privateKey = process.env.BACK_KEY;
                 const hmac = crypto.createHmac("sha256", privateKey);
                 this.passwordDigest = hmac.update(this.password).digest("hex");
                 if (this.passwordDigest === user.passwordDigest) {
