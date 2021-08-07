@@ -1,10 +1,22 @@
 import {NextPage} from 'next';
 import React from 'react';
-import {useForm} from '../../hooks/useForm';
+import {useForm} from 'hooks/useForm';
+import axios, {AxiosError} from 'axios';
 
 const New: NextPage = (props) => {
     const onSubmit = (form: typeof initForm) => {
-
+        axios.post('/api/v1/posts', form).then((response) => {
+            setErrorInfo('');
+            alert('创建博客成功');
+        }).catch((error) => {
+            console.log('err', error.response.data);
+            if (error.response) {
+                setErrorInfo((error as AxiosError).response.data.message);
+            } else {
+                setErrorInfo('登录失败，请联系管理员');
+            }
+        });
+        console.log('submit');
     };
 
     const initForm = {title: '', content: ''};
