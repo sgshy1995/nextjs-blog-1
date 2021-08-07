@@ -17,7 +17,7 @@ const create = async () => {
 // 使用立即执行函数，解决js中的await不能在顶层的问题
 const promise = (async function () {
     const manager = getConnectionManager();
-    const currentConnection = manager.has('default') && manager.get('default');
+    const currentConnection = manager && manager.has('default') && manager.get('default');
     // 如果存在连接，则先关闭。这是为了解决开发环境每次修改代码，如果使用旧的连接，则依然无法识别到metadata的bug。
     if (currentConnection) await currentConnection.close();
     return create();
