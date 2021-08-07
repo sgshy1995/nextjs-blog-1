@@ -1,18 +1,11 @@
 import {NextPage} from 'next';
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import axios, {AxiosError} from 'axios';
-import {Form} from '../components/Form';
 import {frontCreateCipher} from '../lib/frontSecurity';
+import {useForm} from '../hooks/useForm';
 
 const SignUp: NextPage = () => {
-    const [form, setForm] = useState({
-        username: '',
-        password: '',
-        passwordConfirm: ''
-    });
-    const [errorInfo, setErrorInfo] = useState('');
-    const onSubmit = useCallback((e) => {
-        e.preventDefault();
+    const onSubmit = (form: typeof initForm) => {
 
         // 获取公钥，公钥的环境变量要暴露给浏览器
         let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
@@ -41,47 +34,34 @@ const SignUp: NextPage = () => {
             }
         });
         console.log('submit', form);
-    }, [form]);
+    };
+
+    const initForm = {username: '', password: '', passwordConfirm: ''};
+    const {formEle, setErrorInfo} = useForm({
+        initForm,
+        onSubmit,
+        fields: [
+            {
+                label: '用户名', type: 'text', key: 'username'
+            },
+            {
+                label: '密码', type: 'password', key: 'password'
+            },
+            {
+                label: '确认密码', type: 'password', key: 'passwordConfirm'
+            }
+        ],
+        button: <div className="form-item">
+            <button type="submit">注册</button>
+        </div>
+    });
+
     return (
         <React.Fragment>
             <div className="signup-wrapper">
                 <div className="title">注册页</div>
                 <div className="content">
-                    <Form onSubmit={onSubmit}
-                          fields={
-                              [
-                                  {
-                                      label: '用户名', type: 'text', onChange: (e) => {
-                                          setForm({
-                                              ...form,
-                                              username: e.target.value
-                                          });
-                                      }, value: form.username
-                                  },
-                                  {
-                                      label: '密码', type: 'password', onChange: (e) => {
-                                          setForm({
-                                              ...form,
-                                              password: e.target.value
-                                          });
-                                      }, value: form.password
-                                  },
-                                  {
-                                      label: '确认密码', type: 'password', onChange: (e) => {
-                                          setForm({
-                                              ...form,
-                                              passwordConfirm: e.target.value
-                                          });
-                                      }, value: form.passwordConfirm
-                                  }
-                              ]}
-                          errorInfo={errorInfo}
-                          button={
-                              <div className="form-item">
-                                  <button type="submit">注册</button>
-                              </div>
-                          }
-                    />
+                    {formEle}
                 </div>
             </div>
         </React.Fragment>

@@ -1,20 +1,14 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import axios, {AxiosError} from 'axios';
 import {withSession} from '../lib/withSession';
 import {User} from '../src/entity/User';
-import {Form} from '../components/Form';
 import {frontCreateCipher} from '../lib/frontSecurity';
+import {useForm} from '../hooks/useForm';
 
 const SignIn: NextPage<{ user: User | undefined }> = (props) => {
-    const [form, setForm] = useState({
-        username: '',
-        password: ''
-    });
-    const [errorInfo, setErrorInfo] = useState('');
-    const onSubmit = useCallback((e) => {
-        e.preventDefault();
 
+    const onSubmit = (form: typeof initForm) => {
         // 获取公钥，公钥的环境变量要暴露给浏览器
         let publicKey = process.env.NEXT_PUBLIC_FRONT_KEY;
         // 加密
@@ -36,8 +30,24 @@ const SignIn: NextPage<{ user: User | undefined }> = (props) => {
                 setErrorInfo('登录失败，请联系管理员');
             }
         });
-        console.log('submit', form);
-    }, [form]);
+        console.log('submit');
+    };
+    const initForm = {username: '', password: ''};
+    const {formEle, setErrorInfo} = useForm({
+        initForm,
+        onSubmit,
+        fields: [
+            {
+                label: '用户名', type: 'text', key: 'username'
+            },
+            {
+                label: '密码', type: 'password', key: 'password'
+            }
+        ],
+        button: <div className="form-item">
+            <button type="submit">登录</button>
+        </div>
+    });
     return (
         <React.Fragment>
             <div className="signup-wrapper">
@@ -46,33 +56,7 @@ const SignIn: NextPage<{ user: User | undefined }> = (props) => {
                     props.user && <div>当前登录用户：{props.user.username}</div>
                 }
                 <div className="content">
-                    <Form onSubmit={onSubmit}
-                          fields={
-                              [
-                                  {
-                                      label: '用户名', type: 'text', onChange: (e) => {
-                                          setForm({
-                                              ...form,
-                                              username: e.target.value
-                                          });
-                                      }, value: form.username
-                                  },
-                                  {
-                                      label: '密码', type: 'password', onChange: (e) => {
-                                          setForm({
-                                              ...form,
-                                              password: e.target.value
-                                          });
-                                      }, value: form.password
-                                  }
-                              ]}
-                          errorInfo={errorInfo}
-                          button={
-                              <div className="form-item">
-                                  <button type="submit">登录</button>
-                              </div>
-                          }
-                    />
+                    {formEle}
                 </div>
             </div>
         </React.Fragment>
