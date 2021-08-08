@@ -10,6 +10,7 @@ const create = async () => {
     // @ts-ignore
     return createConnection({
         ...ormconfig,
+        database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
         entities: [User, Post, Discussion]
     });
 };
