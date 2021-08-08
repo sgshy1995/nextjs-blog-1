@@ -4,7 +4,7 @@ import {UAParser} from 'ua-parser-js';
 import Image from 'next/image';
 import Link from 'next/link';
 import {getDBConnection} from 'lib/getDBConnection';
-import {Post} from '../src/entity/Post';
+import {Post} from 'src/entity/Post';
 
 type Props = {
     browser: {

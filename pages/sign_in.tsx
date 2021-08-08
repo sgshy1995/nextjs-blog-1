@@ -1,10 +1,10 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import React from 'react';
 import axios, {AxiosError} from 'axios';
-import {withSession} from '../lib/withSession';
-import {User} from '../src/entity/User';
-import {frontCreateCipher} from '../lib/frontSecurity';
-import {useForm} from '../hooks/useForm';
+import {withSession} from 'lib/withSession';
+import {User} from 'src/entity/User';
+import {frontCreateCipher} from 'lib/frontSecurity';
+import {useForm} from 'hooks/useForm';
 
 const SignIn: NextPage<{ user: User | undefined }> = (props) => {
 

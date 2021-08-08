@@ -1,7 +1,7 @@
 import {GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage} from 'next';
-import {getPost, getPostsIds} from '../../lib/posts';
-import {getDBConnection} from '../../lib/getDBConnection';
-import {Post} from '../../src/entity/Post';
+import {getPost, getPostsIds} from 'lib/posts';
+import {getDBConnection} from 'lib/getDBConnection';
+import {Post} from 'src/entity/Post';
 import {UAParser} from 'ua-parser-js';
 
 type Props = {

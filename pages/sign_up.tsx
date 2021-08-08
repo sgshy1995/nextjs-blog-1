@@ -1,8 +1,8 @@
 import {NextPage} from 'next';
 import React from 'react';
 import axios, {AxiosError} from 'axios';
-import {frontCreateCipher} from '../lib/frontSecurity';
-import {useForm} from '../hooks/useForm';
+import {frontCreateCipher} from 'lib/frontSecurity';
+import {useForm} from 'hooks/useForm';
 
 const SignUp: NextPage = () => {
     const onSubmit = (form: typeof initForm) => {

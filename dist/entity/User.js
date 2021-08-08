@@ -25,7 +25,7 @@ var _initializerWarningHelper2 = _interopRequireDefault(require("@babel/runtime/
 
 var _typeorm = require("typeorm");
 
-var _getDBConnection = require("../../lib/getDBConnection");
+var _getDBConnection = require("lib/getDBConnection");
 
 var _crypto = _interopRequireDefault(require("crypto"));
 

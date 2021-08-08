@@ -1,4 +1,4 @@
-import {getDBConnection} from '../../lib/getDBConnection';
+import {getDBConnection} from 'lib/getDBConnection';
 import crypto from 'crypto';
 import {User} from 'src/entity/User';
 

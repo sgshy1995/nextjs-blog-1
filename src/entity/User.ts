@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import {Post} from "./Post";
 import {Discussion} from './Discussion';
-import {getDBConnection} from '../../lib/getDBConnection';
+import {getDBConnection} from 'lib/getDBConnection';
 import crypto from 'crypto';
 
 @Entity('users')

@@ -17,7 +17,7 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
-var _getDBConnection = require("../../lib/getDBConnection");
+var _getDBConnection = require("lib/getDBConnection");
 
 var _crypto = _interopRequireDefault(require("crypto"));
 

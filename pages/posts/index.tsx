@@ -1,7 +1,6 @@
 import {GetStaticProps, NextPage} from 'next';
 import React from 'react';
-import {usePosts} from '../../hooks/usePosts';
-import {getPosts} from '../../lib/posts';
+import {getPosts} from 'lib/posts';
 import Link from 'next/link';
 
 type Props = {
