@@ -11,6 +11,7 @@ const create = async () => {
     return createConnection({
         ...ormconfig,
         //database: process.env.NODE_ENV === 'production' ? 'blog_production' : 'blog_development',
+        host: process.env.NODE_ENV === 'production' ? 'host.docker.internal' : 'localhost',
         entities: [User, Post, Discussion]
     });
 };
