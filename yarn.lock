@@ -493,10 +493,10 @@
   resolved "https://registry.nlark.com/@types/node/download/@types/node-16.4.8.tgz#ef4974f47524448428542365db2fe7b638f928e5"
   integrity sha1-70l09HUkRIQoVCNl2y/ntjj5KOU=
 
-"@types/node@^16.4.9":
-  version "16.4.9"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.4.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.4.9.tgz#04eb3da65d08ea377f5e682bf0d22dc1f5e7f19e"
-  integrity sha1-BOs9pl0I6jd/Xmgr8NItwfXn8Z4=
+"@types/node@^16.4.13":
+  version "16.4.13"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.4.13.tgz?cache=0&sync_timestamp=1628211811317&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.4.13.tgz#7dfd9c14661edc65cccd43a29eb454174642370d"
+  integrity sha1-ff2cFGYe3GXMzUOinrRUF0ZCNw0=
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -515,10 +515,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.15":
+"@types/react@*":
   version "17.0.15"
   resolved "https://registry.nlark.com/@types/react/download/@types/react-17.0.15.tgz?cache=0&sync_timestamp=1627124612774&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-17.0.15.tgz#c7533dc38025677e312606502df7656a6ea626d0"
   integrity sha1-x1M9w4AlZ34xJgZQLfdlam6mJtA=
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.16":
+  version "17.0.16"
+  resolved "https://registry.nlark.com/@types/react/download/@types/react-17.0.16.tgz?cache=0&sync_timestamp=1628222723864&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-17.0.16.tgz#056f40c45645761527baeb7d89d842a6abdf285a"
+  integrity sha1-BW9AxFZFdhUnuut9idhCpqvfKFo=
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -4625,7 +4634,7 @@ typeorm@0.2.25:
 
 typescript@^4.3.5:
   version "4.3.5"
-  resolved "https://registry.nlark.com/typescript/download/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
+  resolved "https://registry.nlark.com/typescript/download/typescript-4.3.5.tgz?cache=0&sync_timestamp=1628579730419&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypescript%2Fdownload%2Ftypescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
   integrity sha1-TRw3zBbok5c8RaBohrcRMjTxGfQ=
 
 ua-parser-js@^0.7.28:
