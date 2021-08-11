@@ -3,7 +3,7 @@ import {User} from 'src/entity/User';
 import {Post} from 'src/entity/Post';
 import {Discussion} from 'src/entity/Discussion';
 import 'reflect-metadata';
-import ormconfig from 'ormconfig.json';
+import ormconfig from 'ormconfig';
 
 // 解决 js 无法识别 metadata 的问题
 const create = async () => {
