@@ -10,8 +10,8 @@ const Posts: NextApiHandler = withSession(async (req, res) => {
         const fileList = await getPosts();
         console.log('fileList', fileList);
         res.status(200)
-            .setHeader('Content-Type', 'application/json')
-            .json(fileList);
+            .setHeader('Content-Type', 'application/json');
+        res.json(fileList);
         res.end();
     }else if (req.method==='POST'){
         const {title,content} = req.body
@@ -22,12 +22,12 @@ const Posts: NextApiHandler = withSession(async (req, res) => {
         post.author = req.session.get('currentUser');
         await connection.manager.save(post)
         res.status(200)
-            .setHeader('Content-Type', 'application/json')
-            .json({
-                code: 200,
-                message: '创建成功',
-                status: true
-            });
+            .setHeader('Content-Type', 'application/json');
+        res.json({
+            code: 200,
+            message: '创建成功',
+            status: true
+        })
         res.end();
     }
 });

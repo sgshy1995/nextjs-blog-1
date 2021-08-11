@@ -66,7 +66,8 @@ const Users: NextApiHandler = async (req, res) => {
     } else {
         res.status(422);
     }
-    res.setHeader('Content-Type', 'application/json').json(user.result);
+    res.setHeader('Content-Type', 'application/json');
+    res.json(user.result);
     res.end();
 };
 
