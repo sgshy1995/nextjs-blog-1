@@ -10,7 +10,7 @@ import {withSession} from 'lib/withSession';
 import {User} from '../src/entity/User';
 import React, {ReactComponentElement} from 'react';
 import {Layout, Menu, Row, Col, Input, Badge, Divider, Avatar} from 'antd';
-import { initializeStore } from 'redux/store'
+import { initializeStore } from 'store/store'
 
 const {Sider, Content} = Layout;
 import {
