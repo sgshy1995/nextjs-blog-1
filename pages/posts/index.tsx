@@ -2,15 +2,20 @@ import {GetStaticProps, NextPage} from 'next';
 import React from 'react';
 import {getPosts} from 'lib/posts';
 import Link from 'next/link';
+import Home from '../index';
+import dynamic from 'next/dynamic'
+
+const DynamicComponent = dynamic(() => import('../index'))
 
 type Props = {
     posts: Post[];
 }
 
 const PostsIndex: NextPage<Props> = (props) => {
+    console.log('posts props',props)
     const {posts} = props
     return (
-        <React.Fragment>
+        <Home innerPage={<React.Fragment>
             <div>文章列表</div>
             <div className="posts-wrapper">
                 {
@@ -23,7 +28,12 @@ const PostsIndex: NextPage<Props> = (props) => {
                     </div>)
                 }
             </div>
-        </React.Fragment>
+
+
+        </React.Fragment>}>
+
+        </Home>
+
     );
 };
 

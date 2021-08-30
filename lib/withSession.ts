@@ -3,7 +3,7 @@ import {GetServerSideProps, NextApiHandler} from 'next';
 
 export function withSession(handler:NextApiHandler | GetServerSideProps) {
     return withIronSession(handler, {
-        password: process.env.COOKIE,
+        password: process.env.COOKIE || null,
         cookieName: 'blog',
         cookieOptions: {
             // the next line allows to use the session in non-https environments like
